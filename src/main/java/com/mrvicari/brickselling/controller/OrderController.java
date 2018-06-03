@@ -30,4 +30,10 @@ public class OrderController
 
         return orderMap;
     }
+
+    @GetMapping("/order/{reference}")
+    public BrickOrder getOrder(@PathVariable Integer reference)
+    {
+        return orderService.getOrder(reference);
+    }
 }

@@ -20,4 +20,9 @@ public class OrderService
 
         return order;
     }
+
+    public BrickOrder getOrder(Integer reference)
+    {
+        return orderRepository.findByReference(reference);
+    }
 }

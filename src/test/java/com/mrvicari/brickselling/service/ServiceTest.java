@@ -10,6 +10,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -39,5 +40,15 @@ public class ServiceTest
         BrickOrder newOrder = orderService.createOrder(new BrickOrder(1, NUM_OF_BRICKS));
 
         assertThat(newOrder.getNumOfBricks()).isEqualTo(NUM_OF_BRICKS);
+    }
+
+    @Test
+    public void getOrder_returnDetails()
+    {
+        when(orderRepository.findByReference(anyInt())).thenReturn(TEST_ORDER);
+
+        BrickOrder order = orderService.getOrder(anyInt());
+
+        assertThat(order.getNumOfBricks()).isEqualTo(NUM_OF_BRICKS);
     }
 }

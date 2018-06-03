@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -39,5 +40,19 @@ public class ControllerTest
         .content("{\"num_of_bricks\": 5}"))
                 .andExpect(status().isCreated())
                 .andExpect(content().json("{\"reference\": 1}"));
+    }
+
+    @Test
+    public void getOrder_returnDetails() throws Exception
+    {
+        BrickOrder order = new BrickOrder(1, 5);
+
+        when(orderService.getOrder(1)).thenReturn(order);
+
+        String jsonResponse = "{\"reference\": 1, \"num_of_bricks\": 5}";
+
+        mockMvc.perform(get("/api/order/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(jsonResponse));
     }
 }

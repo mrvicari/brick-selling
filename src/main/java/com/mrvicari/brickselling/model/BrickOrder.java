@@ -1,5 +1,8 @@
 package com.mrvicari.brickselling.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,6 +14,7 @@ public class BrickOrder
     @GeneratedValue
     private Integer reference;
 
+    @JsonProperty("num_of_bricks")
     private Integer numOfBricks;
 
     public BrickOrder()
