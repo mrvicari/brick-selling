@@ -16,6 +16,8 @@ public class OrderService
 
     public BrickOrder createOrder(BrickOrder order)
     {
-        return null;
+        orderRepository.save(order);
+
+        return order;
     }
 }
