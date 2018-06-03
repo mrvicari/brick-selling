@@ -1,12 +1,14 @@
 package com.mrvicari.brickselling.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class BrickOrder
 {
     @Id
+    @GeneratedValue
     private Integer reference;
 
     private Integer numOfBricks;
