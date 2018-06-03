@@ -9,6 +9,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -59,5 +61,18 @@ public class ServiceTest
         when(orderRepository.findByReference(anyInt())).thenReturn(null);
 
         orderService.getOrder(anyInt());
+    }
+
+    @Test
+    public void getAllOrders_returnList()
+    {
+        BrickOrder order1 = new BrickOrder(1, 5);
+        BrickOrder order2 = new BrickOrder(2, 10);
+
+        when(orderRepository.findAll()).thenReturn(Arrays.asList(order1, order2));
+
+        assertThat(orderService.getAllorders().size()).isEqualTo(2);
+        assertThat(orderService.getAllorders().get(0)).isEqualTo(order1);
+        assertThat(orderService.getAllorders().get(1)).isEqualTo(order2);
     }
 }

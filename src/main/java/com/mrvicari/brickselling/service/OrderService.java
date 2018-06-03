@@ -5,6 +5,8 @@ import com.mrvicari.brickselling.model.BrickOrder;
 import com.mrvicari.brickselling.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OrderService
 {
@@ -29,5 +31,10 @@ public class OrderService
             throw new OrderNotFoundException();
 
         return order;
+    }
+
+    public List<BrickOrder> getAllorders()
+    {
+        return orderRepository.findAll();
     }
 }

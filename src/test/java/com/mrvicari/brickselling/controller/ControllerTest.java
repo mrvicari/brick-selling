@@ -11,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Arrays;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -52,6 +54,21 @@ public class ControllerTest
         String jsonResponse = "{\"reference\": 1, \"num_of_bricks\": 5}";
 
         mockMvc.perform(get("/api/order/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(jsonResponse));
+    }
+
+    @Test
+    public void getOrder_returnList() throws Exception
+    {
+        BrickOrder order1 = new BrickOrder(1, 5);
+        BrickOrder order2 = new BrickOrder(2, 10);
+
+        when(orderService.getAllorders()).thenReturn(Arrays.asList(order1, order2));
+
+        String jsonResponse = "[{\"reference\": 1, \"num_of_bricks\": 5}, {\"reference\": 2, \"num_of_bricks\": 10}]";
+
+        mockMvc.perform(get("/api/order"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(jsonResponse));
     }
