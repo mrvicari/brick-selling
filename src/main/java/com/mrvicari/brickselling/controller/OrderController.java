@@ -42,7 +42,18 @@ public class OrderController
     @GetMapping("/order")
     public List<BrickOrder> getAllOrders()
     {
-        return orderService.getAllorders();
+        return orderService.getAllOrders();
+    }
+
+    @PutMapping("/order/{reference}")
+    public Map<String, Integer> updateOrder(@PathVariable Integer reference, @RequestBody BrickOrder editedOrder)
+    {
+        BrickOrder order = orderService.updateOrder(reference, editedOrder);
+
+        Map<String, Integer> orderMap = new HashMap<>();
+        orderMap.put("reference", order.getReference());
+
+        return orderMap;
     }
 
     @ExceptionHandler

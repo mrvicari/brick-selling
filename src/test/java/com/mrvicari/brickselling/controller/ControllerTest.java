@@ -14,9 +14,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Arrays;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -59,17 +61,31 @@ public class ControllerTest
     }
 
     @Test
-    public void getOrder_returnList() throws Exception
+    public void getAllOrders_returnList() throws Exception
     {
         BrickOrder order1 = new BrickOrder(1, 5);
         BrickOrder order2 = new BrickOrder(2, 10);
 
-        when(orderService.getAllorders()).thenReturn(Arrays.asList(order1, order2));
+        when(orderService.getAllOrders()).thenReturn(Arrays.asList(order1, order2));
 
         String jsonResponse = "[{\"reference\": 1, \"num_of_bricks\": 5}, {\"reference\": 2, \"num_of_bricks\": 10}]";
 
         mockMvc.perform(get("/api/order"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(jsonResponse));
+    }
+
+    @Test
+    public void updateOrder_returnReference() throws Exception
+    {
+        BrickOrder order = new BrickOrder(1, 5);
+
+        when(orderService.updateOrder(anyInt(), any())).thenReturn(order);
+
+        mockMvc.perform(put("/api/order/1")
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .content("{\"num_of_bricks\": 10}"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("{\"reference\": 1}"));
     }
 }

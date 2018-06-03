@@ -33,8 +33,21 @@ public class OrderService
         return order;
     }
 
-    public List<BrickOrder> getAllorders()
+    public List<BrickOrder> getAllOrders()
     {
         return orderRepository.findAll();
+    }
+
+    public BrickOrder updateOrder(Integer reference, BrickOrder editedOrder)
+    {
+        BrickOrder order = orderRepository.findByReference(reference);
+
+        if (order == null)
+            throw new OrderNotFoundException();
+
+        order.setNumOfBricks(editedOrder.getNumOfBricks());
+        orderRepository.save(order);
+
+        return order;
     }
 }

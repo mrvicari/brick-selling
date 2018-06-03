@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -71,8 +72,23 @@ public class ServiceTest
 
         when(orderRepository.findAll()).thenReturn(Arrays.asList(order1, order2));
 
-        assertThat(orderService.getAllorders().size()).isEqualTo(2);
-        assertThat(orderService.getAllorders().get(0)).isEqualTo(order1);
-        assertThat(orderService.getAllorders().get(1)).isEqualTo(order2);
+        List<BrickOrder> allOrders = orderService.getAllOrders();
+
+        assertThat(allOrders.size()).isEqualTo(2);
+        assertThat(allOrders.get(0)).isEqualTo(order1);
+        assertThat(allOrders.get(1)).isEqualTo(order2);
+    }
+
+    @Test
+    public void updateOrder_searchDb_returnReference()
+    {
+        when(orderRepository.findByReference(anyInt())).thenReturn(new BrickOrder(1, 5));
+
+        BrickOrder editedOrder = new BrickOrder(null,10);
+
+        BrickOrder updatedOrder = orderService.updateOrder(1, editedOrder);
+
+        assertThat(updatedOrder.getReference()).isEqualTo(1);
+        assertThat(updatedOrder.getNumOfBricks()).isEqualTo(editedOrder.getNumOfBricks());
     }
 }
