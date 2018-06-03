@@ -11,6 +11,10 @@ public class BrickOrder
 
     private Integer numOfBricks;
 
+    public BrickOrder()
+    {
+    }
+
     public BrickOrder(Integer reference, Integer numOfBricks)
     {
         this.reference = reference;

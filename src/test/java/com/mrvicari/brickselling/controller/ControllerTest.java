@@ -33,10 +33,10 @@ public class ControllerTest
         BrickOrder order = new BrickOrder(1, 5);
 
         when(orderService.createOrder(any())).thenReturn(order);
-        
+
         mockMvc.perform(post("/api/order")
-        .contentType(MediaType.APPLICATION_JSON)
-        .content("{\"num_of_bricks\": 5"))
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .content("{\"num_of_bricks\": 5}"))
                 .andExpect(status().isCreated())
                 .andExpect(content().json("{\"reference\": 1}"));
     }

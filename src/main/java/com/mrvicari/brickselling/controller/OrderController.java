@@ -1,11 +1,9 @@
 package com.mrvicari.brickselling.controller;
 
+import com.mrvicari.brickselling.model.BrickOrder;
 import com.mrvicari.brickselling.service.OrderService;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,12 +21,12 @@ public class OrderController
 
     @PostMapping("/order")
     @ResponseStatus(HttpStatus.CREATED)
-    public Map<String, Integer> createOrder()
+    public Map<String, Integer> createOrder(@RequestBody BrickOrder newOrder)
     {
-        // Call service to create order
+        BrickOrder createdOrder = orderService.createOrder(newOrder);
 
         Map<String, Integer> orderMap = new HashMap<>();
-        orderMap.put("reference", 1);
+        orderMap.put("reference", createdOrder.getReference());
 
         return orderMap;
     }
