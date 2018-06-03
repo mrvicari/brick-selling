@@ -1,5 +1,6 @@
 package com.mrvicari.brickselling.service;
 
+import com.mrvicari.brickselling.exception.OrderNotFoundException;
 import com.mrvicari.brickselling.model.BrickOrder;
 import com.mrvicari.brickselling.repository.OrderRepository;
 import org.junit.Before;
@@ -50,5 +51,13 @@ public class ServiceTest
         BrickOrder order = orderService.getOrder(anyInt());
 
         assertThat(order.getNumOfBricks()).isEqualTo(NUM_OF_BRICKS);
+    }
+
+    @Test(expected = OrderNotFoundException.class)
+    public void getOrder_invalidReference()
+    {
+        when(orderRepository.findByReference(anyInt())).thenReturn(null);
+
+        orderService.getOrder(anyInt());
     }
 }

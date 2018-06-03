@@ -1,5 +1,6 @@
 package com.mrvicari.brickselling.controller;
 
+import com.mrvicari.brickselling.exception.OrderNotFoundException;
 import com.mrvicari.brickselling.model.BrickOrder;
 import com.mrvicari.brickselling.service.OrderService;
 import org.springframework.http.HttpStatus;
@@ -35,5 +36,11 @@ public class OrderController
     public BrickOrder getOrder(@PathVariable Integer reference)
     {
         return orderService.getOrder(reference);
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public void orderNotFoundHandler(OrderNotFoundException ex)
+    {
     }
 }
