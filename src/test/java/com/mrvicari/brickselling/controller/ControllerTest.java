@@ -88,4 +88,11 @@ public class ControllerTest
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"reference\": 1}"));
     }
+
+    @Test
+    public void fulfilOrder() throws Exception
+    {
+        mockMvc.perform(put("/api/order/1/fulfil"))
+                .andExpect(status().isOk());
+    }
 }

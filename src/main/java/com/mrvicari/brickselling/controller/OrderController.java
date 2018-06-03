@@ -1,5 +1,6 @@
 package com.mrvicari.brickselling.controller;
 
+import com.mrvicari.brickselling.exception.BadRequestException;
 import com.mrvicari.brickselling.exception.OrderNotFoundException;
 import com.mrvicari.brickselling.model.BrickOrder;
 import com.mrvicari.brickselling.service.OrderService;
@@ -56,9 +57,21 @@ public class OrderController
         return orderMap;
     }
 
+    @PutMapping("/order/{reference}/fulfil")
+    public void fulfilOrder(@PathVariable Integer reference)
+    {
+        orderService.fulfilOrder(reference);
+    }
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public void orderNotFoundHandler(OrderNotFoundException ex)
+    {
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public void BadRequestHandler(BadRequestException ex)
     {
     }
 }

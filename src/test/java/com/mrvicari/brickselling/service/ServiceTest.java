@@ -91,4 +91,21 @@ public class ServiceTest
         assertThat(updatedOrder.getReference()).isEqualTo(1);
         assertThat(updatedOrder.getNumOfBricks()).isEqualTo(editedOrder.getNumOfBricks());
     }
+
+    @Test
+    public void fulfilOrder_checkDispatched()
+    {
+        BrickOrder order = new BrickOrder();
+        order.setNumOfBricks(5);
+        order.setDispatched(false);
+        orderRepository.save(order);
+
+        when(orderRepository.findByReference(anyInt())).thenReturn(order);
+
+        orderService.fulfilOrder(1);
+
+        BrickOrder foundOrder = orderRepository.findByReference(1);
+
+        assertThat(foundOrder.getDispatched()).isEqualTo(true);
+    }
 }

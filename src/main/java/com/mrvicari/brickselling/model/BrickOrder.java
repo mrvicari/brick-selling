@@ -1,6 +1,5 @@
 package com.mrvicari.brickselling.model;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Entity;
@@ -16,6 +15,8 @@ public class BrickOrder
 
     @JsonProperty("num_of_bricks")
     private Integer numOfBricks;
+
+    private Boolean dispatched;
 
     public BrickOrder()
     {
@@ -45,5 +46,15 @@ public class BrickOrder
     public void setNumOfBricks(Integer numOfBricks)
     {
         this.numOfBricks = numOfBricks;
+    }
+
+    public Boolean getDispatched()
+    {
+        return dispatched;
+    }
+
+    public void setDispatched(Boolean dispatched)
+    {
+        this.dispatched = dispatched;
     }
 }

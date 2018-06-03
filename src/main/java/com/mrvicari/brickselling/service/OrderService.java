@@ -1,5 +1,6 @@
 package com.mrvicari.brickselling.service;
 
+import com.mrvicari.brickselling.exception.BadRequestException;
 import com.mrvicari.brickselling.exception.OrderNotFoundException;
 import com.mrvicari.brickselling.model.BrickOrder;
 import com.mrvicari.brickselling.repository.OrderRepository;
@@ -50,4 +51,17 @@ public class OrderService
 
         return order;
     }
+
+    public void fulfilOrder(Integer reference)
+    {
+        BrickOrder order = orderRepository.findByReference(reference);
+
+        if (order == null)
+            throw new BadRequestException();
+
+        order.setDispatched(true);
+
+        orderRepository.save(order);
+    }
+
 }
